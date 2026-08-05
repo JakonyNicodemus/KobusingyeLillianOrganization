@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: uganda-ems
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    buildCommand: |
+      cd Backend
+      javac -d . src/com/ems/*.java
+    startCommand: |
+      cd Backend
+      java com.ems.Main
+    envVars:
+      - key: PORT
+        value: 8080
