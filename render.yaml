@@ -1,15 +1,18 @@
 services:
   - type: web
-    name: uganda-ems
+    name: kobusingyelillianorganization-ems
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile
     buildCommand: |
+      echo "Building the application..."
       cd Backend
-      javac -d . src/com/ems/*.java
+      javac -d ./classes src/com/ems/*.java
     startCommand: |
+      echo "Starting the application..."
       cd Backend
-      java com.ems.Main
+      java -cp ./classes com.ems.Main
     envVars:
       - key: PORT
         value: 8080
+    healthCheckPath: /api/employees
