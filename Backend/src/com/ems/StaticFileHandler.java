@@ -20,12 +20,12 @@ public class StaticFileHandler implements HttpHandler {
             return;
         }
         
-        // Try multiple locations
+        // Try multiple locations for Render deployment
         String[] possiblePaths = {
-            "../../frontend" + path,
-            "../frontend" + path,
-            "frontend" + path,
-            "." + path
+            "./frontend" + path,      // For Render (files are in /app/frontend)
+            "../frontend" + path,     // For local (from Backend folder)
+            "frontend" + path,        // Alternative
+            "." + path                // Fallback
         };
         
         File file = null;
@@ -33,11 +33,13 @@ public class StaticFileHandler implements HttpHandler {
             File f = new File(filePath);
             if (f.exists() && !f.isDirectory()) {
                 file = f;
+                System.out.println("✅ Found file at: " + filePath);
                 break;
             }
         }
         
         if (file == null) {
+            System.out.println("❌ File not found: " + path);
             send404(exchange);
             return;
         }
