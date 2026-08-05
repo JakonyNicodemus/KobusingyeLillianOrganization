@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇺🇬 NicoTech Solutions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-uganda"></i>
+                <span>Uganda<span class="highlight">EMS</span></span>
+                <span class="version-badge">v2.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" onclick="showPage('dashboard')" class="active">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a href="#" onclick="showPage('employees')">
+                    <i class="fas fa-users"></i> Employees
+                </a>
+                <a href="#" onclick="showPage('payroll')">
+                    <i class="fas fa-money-bill-wave"></i> Payroll
+                </a>
+                <a href="#" onclick="showPage('nssf')">
+                    <i class="fas fa-shield-alt"></i> NSSF
+                </a>
+                <a href="#" onclick="showPage('ura')">
+                    <i class="fas fa-file-invoice"></i> URA
+                </a>
+            </div>
+            <div class="nav-actions">
+                <button onclick="toggleTheme()" class="theme-btn">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <span class="currency-badge">🇺🇬 UGX</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page active">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">📊 Dashboard Overview</h1>
+                    <p class="page-subtitle">Welcome to your Uganda Employee Management System</p>
+                </div>
+                <button class="btn-primary" onclick="showPage('add-employee')">
+                    <i class="fas fa-plus"></i> Add Employee
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card blue">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div>
+                        <h3>Total Employees</h3>
+                        <p id="totalEmployees">0</p>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon"><i class="fas fa-user-check"></i></div>
+                    <div>
+                        <h3>Active Staff</h3>
+                        <p id="activeEmployees">0</p>
+                    </div>
+                </div>
+                <div class="stat-card gold">
+                    <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div>
+                        <h3>Monthly Payroll</h3>
+                        <p id="monthlyPayroll">UGX 0</p>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon"><i class="fas fa-building"></i></div>
+                    <div>
+                        <h3>Departments</h3>
+                        <p id="totalDepartments">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <div class="action-grid">
+                    <div class="action-card" onclick="showPage('add-employee')">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Add Employee</span>
+                    </div>
+                    <div class="action-card" onclick="showPage('employees')">
+                        <i class="fas fa-list"></i>
+                        <span>View All</span>
+                    </div>
+                    <div class="action-card" onclick="showPage('payroll')">
+                        <i class="fas fa-calculator"></i>
+                        <span>Payroll</span>
+                    </div>
+                    <div class="action-card" onclick="showPage('nssf')">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>NSSF</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ugandan Updates -->
+            <div class="updates-card">
+                <h3><i class="fas fa-newspaper"></i> Uganda HR Updates</h3>
+                <div class="updates-list">
+                    <div class="update-item">
+                        <span class="update-date">Today</span>
+                        <span>NSSF contribution rate: 5% Employee, 10% Employer</span>
+                    </div>
+                    <div class="update-item">
+                        <span class="update-date">This Month</span>
+                        <span>URA tax filing deadline: 15th of every month</span>
+                    </div>
+                    <div class="update-item">
+                        <span class="update-date">Upcoming</span>
+                        <span>🇺🇬 Independence Day - October 9th (Public Holiday)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employees Page -->
+        <div id="employees-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">👥 Employee Directory</h1>
+                    <p class="page-subtitle">Manage all employees</p>
+                </div>
+                <button class="btn-primary" onclick="showPage('add-employee')">
+                    <i class="fas fa-plus"></i> Add Employee
+                </button>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search employees..." onkeyup="searchEmployees()">
+                </div>
+                <div class="filter-group">
+                    <i class="fas fa-filter"></i>
+                    <select id="departmentFilter" onchange="searchEmployees()">
+                        <option value="">All Departments</option>
+                        <option value="Administration">Administration</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="IT & Technology">IT & Technology</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Sales & Marketing">Sales & Marketing</option>
+                    </select>
+                </div>
+                <button class="btn-outline" onclick="resetFilters()">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table class="employee-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Position</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Add Employee Page -->
+        <div id="add-employee-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">🇺🇬 Add New Employee</h1>
+                    <p class="page-subtitle">Enter employee details</p>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <form id="employeeForm" onsubmit="saveEmployee(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> First Name *</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Last Name *</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Email *</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card"></i> Employee ID *</label>
+                            <input type="text" id="employeeId" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-building"></i> Department *</label>
+                            <select id="department" required>
+                                <option value="">Select Department</option>
+                                <option value="Administration">Administration</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Human Resources">Human Resources</option>
+                                <option value="IT & Technology">IT & Technology</option>
+                                <option value="Operations">Operations</option>
+                                <option value="Sales & Marketing">Sales & Marketing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-briefcase"></i> Position *</label>
+                            <input type="text" id="position" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Hire Date *</label>
+                            <input type="date" id="hireDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-money-bill-wave"></i> Salary (UGX) *</label>
+                            <input type="number" id="salary" step="1000" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Phone Number</label>
+                            <input type="text" id="phoneNumber">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-circle"></i> Status</label>
+                            <select id="status">
+                                <option value="ACTIVE">Active</option>
+                                <option value="ON_LEAVE">On Leave</option>
+                                <option value="TERMINATED">Terminated</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-shield-alt"></i> NSSF Number</label>
+                            <input type="text" id="nssfNumber">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-file-invoice"></i> TIN Number</label>
+                            <input type="text" id="tinNumber">
+                        </div>
+                        <div class="form-group full-width">
+                            <label><i class="fas fa-home"></i> Address</label>
+                            <textarea id="address" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <input type="hidden" id="editId">
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="submitBtn">
+                            <i class="fas fa-save"></i> Add Employee
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="resetForm()">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Payroll Page -->
+        <div id="payroll-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">💰 Payroll Management</h1>
+                    <p class="page-subtitle">Monthly payroll in UGX</p>
+                </div>
+                <button class="btn-success" onclick="generatePayroll()">
+                    <i class="fas fa-calculator"></i> Generate
+                </button>
+            </div>
+            <div class="payroll-summary" id="payrollSummary">
+                <div class="payroll-stat">
+                    <span>Total Payroll</span>
+                    <h3 id="totalPayroll">UGX 0</h3>
+                </div>
+                <div class="payroll-stat">
+                    <span>Total NSSF</span>
+                    <h3 id="totalNSSF">UGX 0</h3>
+                </div>
+                <div class="payroll-stat">
+                    <span>Total PAYE Tax</span>
+                    <h3 id="totalPAYE">UGX 0</h3>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="payroll-table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Gross Salary</th>
+                            <th>NSSF (5%)</th>
+                            <th>PAYE Tax</th>
+                            <th>Net Pay</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payrollTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- NSSF Page -->
+        <div id="nssf-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">🛡️ NSSF Management</h1>
+                    <p class="page-subtitle">National Social Security Fund</p>
+                </div>
+            </div>
+            <div class="nssf-summary" id="nssfSummary">
+                <div class="nssf-stat">
+                    <span>Active Contributors</span>
+                    <h3 id="nssfActive">0</h3>
+                </div>
+                <div class="nssf-stat">
+                    <span>Employee Contributions</span>
+                    <h3 id="nssfEmployee">UGX 0</h3>
+                </div>
+                <div class="nssf-stat">
+                    <span>Employer Contributions</span>
+                    <h3 id="nssfEmployer">UGX 0</h3>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="nssf-table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>NSSF Number</th>
+                            <th>Employee 5%</th>
+                            <th>Employer 10%</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="nssfTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- URA Page -->
+        <div id="ura-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">📄 URA Tax Reports</h1>
+                    <p class="page-subtitle">Uganda Revenue Authority</p>
+                </div>
+            </div>
+            <div class="ura-summary">
+                <div class="ura-stat">
+                    <span>Total Employees</span>
+                    <h3 id="uraTotal">0</h3>
+                </div>
+                <div class="ura-stat">
+                    <span>Total PAYE</span>
+                    <h3 id="uraPAYE">UGX 0</h3>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="ura-table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>TIN</th>
+                            <th>Gross Salary</th>
+                            <th>Taxable Income</th>
+                            <th>PAYE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="uraTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
