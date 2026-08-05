@@ -1,0 +1,10 @@
+{
+  "name": "uganda-ems",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "cd Backend && java -cp ./classes com.ems.Main"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
