@@ -10,6 +10,7 @@ public class StaticFileHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String path = exchange.getRequestURI().getPath();
+        System.out.println("📂 Requested path: " + path);
         
         if (path.equals("/") || path.isEmpty()) {
             path = "/index.html";
@@ -20,10 +21,11 @@ public class StaticFileHandler implements HttpHandler {
             return;
         }
         
-        // Try multiple locations for Render deployment
+        // For Render, the files are in /app/frontend/
+        // For local, they are in ../frontend/
         String[] possiblePaths = {
-            "./frontend" + path,      // For Render (files are in /app/frontend)
-            "../frontend" + path,     // For local (from Backend folder)
+            "./frontend" + path,      // Render: /app/frontend/index.html
+            "../frontend" + path,     // Local: from Backend folder
             "frontend" + path,        // Alternative
             "." + path                // Fallback
         };
@@ -35,11 +37,13 @@ public class StaticFileHandler implements HttpHandler {
                 file = f;
                 System.out.println("✅ Found file at: " + filePath);
                 break;
+            } else {
+                System.out.println("❌ Not found: " + filePath);
             }
         }
         
         if (file == null) {
-            System.out.println("❌ File not found: " + path);
+            System.out.println("🚫 File not found: " + path);
             send404(exchange);
             return;
         }
