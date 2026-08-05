@@ -4,11 +4,11 @@ FROM eclipse-temurin:17-alpine
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy your backend source code into the container
-COPY Backend /app
+# Copy your entire project into the container
+COPY . /app
 
 # Compile the Java code
-RUN javac -d . src/com/ems/*.java
+RUN javac -d . Backend/src/com/ems/*.java
 
 # Expose the port your application uses
 EXPOSE 8080
