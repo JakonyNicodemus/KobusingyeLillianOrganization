@@ -1,18 +1,27 @@
 # Use a small, fast Java 17 image
 FROM eclipse-temurin:17-alpine
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy EVERYTHING from your project into the container
+# Copy everything from your project
 COPY . /app
 
-# Compile the Java code (notice the correct path)
-RUN javac -d . Backend/src/com/ems/*.java
+# List files to verify they were copied (for debugging)
+RUN echo "=== Files in /app ===" && ls -la /app
+RUN echo "=== Files in /app/frontend ===" && ls -la /app/frontend || echo "frontend folder not found!"
 
-# Expose the port your application uses
+# Create classes directory
+RUN mkdir -p /app/classes
+
+# Compile Java files
+RUN javac -d /app/classes /app/Backend/src/com/ems/*.java
+
+# Set classpath
+ENV CLASSPATH=/app/classes
+
+# Expose port
 EXPOSE 8080
 
-# Command to start your application
-# Make sure the classpath includes the current directory
-CMD ["java", "com.ems.Main"]
+# Start the application
+CMD ["java", "-cp", "/app/classes", "com.ems.Main"]
