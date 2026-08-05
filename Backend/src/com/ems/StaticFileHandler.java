@@ -10,7 +10,7 @@ public class StaticFileHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String path = exchange.getRequestURI().getPath();
-        System.out.println("📂 Requested path: " + path);
+        System.out.println("📂 Requested: " + path);
         
         if (path.equals("/") || path.isEmpty()) {
             path = "/index.html";
@@ -21,29 +21,54 @@ public class StaticFileHandler implements HttpHandler {
             return;
         }
         
-        // For Render, the files are in /app/frontend/
-        // For local, they are in ../frontend/
+        // Get the current working directory
+        String cwd = System.getProperty("user.dir");
+        System.out.println("📁 Current directory: " + cwd);
+        
+        // Try ALL possible locations
         String[] possiblePaths = {
-            "./frontend" + path,      // Render: /app/frontend/index.html
-            "../frontend" + path,     // Local: from Backend folder
-            "frontend" + path,        // Alternative
-            "." + path                // Fallback
+            // For Render with our Dockerfile
+            "/app/frontend" + path,
+            "./frontend" + path,
+            "../frontend" + path,
+            "frontend" + path,
+            "/app" + path,
+            "." + path
         };
         
         File file = null;
         for (String filePath : possiblePaths) {
             File f = new File(filePath);
+            System.out.println("🔍 Checking: " + filePath);
             if (f.exists() && !f.isDirectory()) {
                 file = f;
-                System.out.println("✅ Found file at: " + filePath);
+                System.out.println("✅ FOUND: " + filePath);
                 break;
-            } else {
-                System.out.println("❌ Not found: " + filePath);
             }
         }
         
         if (file == null) {
-            System.out.println("🚫 File not found: " + path);
+            System.out.println("❌ NOT FOUND: " + path);
+            // List what IS in the current directory
+            File dir = new File(".");
+            String[] files = dir.list();
+            System.out.println("📁 Files in current directory:");
+            if (files != null) {
+                for (String f : files) {
+                    System.out.println("  - " + f);
+                }
+            }
+            // Also check /app
+            File appDir = new File("/app");
+            if (appDir.exists()) {
+                String[] appFiles = appDir.list();
+                System.out.println("📁 Files in /app:");
+                if (appFiles != null) {
+                    for (String f : appFiles) {
+                        System.out.println("  - " + f);
+                    }
+                }
+            }
             send404(exchange);
             return;
         }
