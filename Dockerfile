@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN mkdir -p out && javac -d out src/com/ems/*.java
+RUN mkdir -p out && javac -d out Backend/src/com/ems/*.java
 
 EXPOSE 8080
 
