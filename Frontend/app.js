@@ -3,7 +3,10 @@
 // FIXED - No Duplicates!
 // ============================================
 
-const API_URL = 'http://localhost:8080/api';
+// Auto-detect environment
+const API_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:8080/api' 
+    : `${window.location.origin}/api`;
 
 let employees = [];
 let editingId = null;
