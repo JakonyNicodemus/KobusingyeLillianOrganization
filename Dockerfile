@@ -5,14 +5,13 @@ WORKDIR /app
 # Copy everything
 COPY . /app
 
+# List files for debugging
+RUN echo "=== Files in /app ===" && ls -la /app
+RUN echo "=== Files in /app/frontend ===" && ls -la /app/frontend || echo "frontend folder not found!"
+
 # Compile Java
-RUN cd Backend && javac -d ./classes src/com/ems/*.java
+RUN cd Backend && javac -d . src/com/ems/*.java
 
-# Install Node.js for possible frontend serving
-RUN apk add --no-cache nodejs npm
-
-# Expose port
 EXPOSE 8080
 
-# Start the application
-CMD ["sh", "-c", "cd Backend && java -cp ./classes com.ems.Main"]
+CMD ["sh", "-c", "cd Backend && java com.ems.Main"]
