@@ -21,19 +21,23 @@ public class StaticFileHandler implements HttpHandler {
             return;
         }
         
-        // Get the current working directory
+        // Get current working directory
         String cwd = System.getProperty("user.dir");
         System.out.println("📁 Current directory: " + cwd);
         
-        // Try ALL possible locations
+        // Try ALL possible locations on Fly.io
         String[] possiblePaths = {
-            // For Render with our Dockerfile
+            // Fly.io specific paths
             "/app/frontend" + path,
+            "/app" + path,
+            // Relative paths
             "./frontend" + path,
             "../frontend" + path,
             "frontend" + path,
-            "/app" + path,
-            "." + path
+            "." + path,
+            // Full path from user.dir
+            cwd + "/frontend" + path,
+            cwd + path
         };
         
         File file = null;
@@ -49,7 +53,7 @@ public class StaticFileHandler implements HttpHandler {
         
         if (file == null) {
             System.out.println("❌ NOT FOUND: " + path);
-            // List what IS in the current directory
+            // List what IS in the current directory for debugging
             File dir = new File(".");
             String[] files = dir.list();
             System.out.println("📁 Files in current directory:");
