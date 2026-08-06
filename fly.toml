@@ -2,20 +2,14 @@ app = "uganda-ems"
 primary_region = "jnb"
 
 [build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["paketo-buildpacks/java"]
+  dockerfile = "Dockerfile"
 
 [env]
   PORT = "8080"
-  JAVA_OPTS = "-Xmx512m"
 
 [[services]]
   internal_port = 8080
   protocol = "tcp"
-
-  [services.concurrency]
-    hard_limit = 25
-    soft_limit = 20
 
   [[services.ports]]
     handlers = ["http"]
@@ -24,9 +18,3 @@ primary_region = "jnb"
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
-
-  [[services.tcp_checks]]
-    grace_period = "10s"
-    interval = "15s"
-    restart_limit = 6
-    timeout = "2s"
