@@ -5,7 +5,7 @@ import java.nio.file.*;
 import java.util.*;
 
 public class EmployeeStorage {
-    private static final String DATA_DIR = "data";
+    private static final String DATA_DIR = "Backend/data";
     private static final String FILE_PATH = DATA_DIR + "/employees.json";
     private static Long nextId = 1L;
 
