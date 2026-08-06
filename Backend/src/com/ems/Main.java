@@ -22,7 +22,7 @@ public class Main {
         }
         
         // Check if frontend folder exists
-        File frontendDir = new File("./frontend");
+        File frontendDir = new File("./Frontend");
         if (frontendDir.exists() && frontendDir.isDirectory()) {
             System.out.println("✅ frontend folder exists!");
             String[] frontendFiles = frontendDir.list();
