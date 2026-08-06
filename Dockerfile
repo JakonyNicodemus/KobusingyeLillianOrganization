@@ -8,4 +8,4 @@ RUN mkdir -p out && javac -d out Backend/src/com/ems/*.java
 
 EXPOSE 8080
 
-CMD ["java", "-cp", "out", "com.ems.Main"]
+CMD ["java","-cp","out","com.ems.Main"]
